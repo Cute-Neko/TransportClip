@@ -1,0 +1,23 @@
+# 密钥与令牌 —— 绝不入库
+secrets/
+android/keystore.properties
+android/local.properties
+
+# 构建产物
+dist/
+server/relay-linux-amd64
+server/relay-test.exe
+windows/*.exe
+android/.gradle/
+android/app/build/
+android/build/
+*.apk
+*.exe
+
+# 测试与参考
+test-out/
+reference/
+
+# IDE / 系统
+.DS_Store
+Thumbs.db

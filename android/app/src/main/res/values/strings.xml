@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">公式快传</string>
+    <string name="accessibility_description">用于在不 Root 的情况下截取屏幕并提供框选发送手写公式截图。本服务不会读取屏幕内容,只在您点击悬浮球时截取当前屏幕。</string>
+</resources>

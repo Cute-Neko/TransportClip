@@ -1,0 +1,13 @@
+<resources>
+    <color name="tc_background">#101914</color>
+    <color name="tc_surface">#1B2821</color>
+    <color name="tc_container">#293B32</color>
+    <color name="tc_ink">#E3F2E8</color>
+    <color name="tc_muted">#B2C7BA</color>
+    <color name="tc_primary">#82DDBC</color>
+    <color name="tc_on_primary">#00382A</color>
+    <color name="tc_outline">#809689</color>
+    <color name="tc_success">#83DEB4</color>
+    <color name="tc_error">#FFB3BA</color>
+    <color name="tc_pad_paper">#141B18</color>
+</resources>
