@@ -1,6 +1,6 @@
 # TransportClip · 公式快传
 
-把 Android 平板上的手写公式或截图发到 Windows 剪贴板。适合在 Samsung Notes 写完公式后，直接粘贴到电脑上的文档或聊天窗口。
+把 Android 手机上或平板上的手写公式、笔记选区和截图发到 Windows 剪贴板，再粘贴到电脑上的文档或聊天窗口。可从任意允许系统截屏的 Android 应用取图，也可直接在临时手写板上书写。
 
 - 轻点悬浮球截屏，拖动选区后手动发送。
 - 长按悬浮球打开临时手写板。支持触控笔笔压、笔身按键整笔擦除，以及 App 内的笔宽、笔色和橡皮擦范围预设。
@@ -22,6 +22,8 @@
 - 中继需要 Go 1.23 或更新版本。在 `server/server-src/` 运行 `go build -o transport-relay .`。
 
 ## 自建与连接
+
+客户端首次启动时，中继地址与设备令牌均为空。以下的 relay.example.com 是文档示例，请使用自己的中继域名。
 
 1. 生成并保存一份至少 32 字符的随机设备令牌，例如 `openssl rand -hex 32`。用 `./transport-relay -addr 127.0.0.1:8787 -token-file /path/to/token.txt` 启动中继。仓库提供 [systemd 单元示例](server/deploy/transport-relay.service)。使用 HTTPS 反向代理，将 `/tr-relay/` 连同路径前缀转发到中继，确保 `/tr-relay/ws` 支持 WebSocket Upgrade。
 2. 运行 Windows 客户端，在托盘选择「编辑配置」，将 `server_url` 改为 `wss://relay.example.com/tr-relay/ws`（替换为自己的域名），将 `token` 填为同一令牌。重启客户端后，明文令牌会转为 DPAPI 加密存储。

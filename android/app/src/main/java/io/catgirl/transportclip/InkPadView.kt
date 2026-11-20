@@ -116,7 +116,7 @@ internal class InkPadView(context: Context, private val style: PadStyle) : Frame
                     activePointerId = -1
                     erasing = true
                 } else if (activePointerId == -1 && !buttonHeld && erasing) {
-                    // 擦除中松开笔键:待笔,不自动续写(与 Samsung Notes 行为一致)
+                    // 擦除中松开笔键后等待下一次落笔。
                     erasing = false
                 }
                 if (erasing) {

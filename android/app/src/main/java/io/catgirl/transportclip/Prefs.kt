@@ -15,7 +15,7 @@ internal data class PadStyle(val penWidth: Float, val penColor: PenColor, val er
 object Prefs {
     private const val FILE = "transport"
 
-    const val DEFAULT_UPLOAD_URL = "https://relay.example.com/tr-relay/upload"
+    private const val DEFAULT_UPLOAD_URL = ""
 
     private fun sp(ctx: Context) = ctx.getSharedPreferences(FILE, Context.MODE_PRIVATE)
 

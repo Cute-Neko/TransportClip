@@ -179,7 +179,7 @@ class MainActivity : Activity() {
         }
         appInfoButton.visibility = if (enabled) View.GONE else View.VISIBLE
         resetBallButton.visibility = if (service != null && Prefs.showBall(this)) View.VISIBLE else View.GONE
-        val configured = Prefs.token(this).length >= 32
+        val configured = Prefs.uploadUrl(this).isNotBlank() && Prefs.token(this).length >= 32
         connectionText.text = when (linkResult) {
             is Uploader.Result.Delivered -> "最近一次测试 · 已写入电脑剪贴板"
             Uploader.Result.Offline -> "最近一次测试 · 电脑不在线"
@@ -189,7 +189,7 @@ class MainActivity : Activity() {
                 Uploader.Connection.OFFLINE -> "中继已连接 · 电脑不在线"
                 Uploader.Connection.UNAUTHORIZED -> "设备令牌验证失败"
                 Uploader.Connection.UNAVAILABLE -> "无法获取连接状态 · 可发送测试图片"
-                null -> if (configured) "正在检查连接…" else "请在服务器设置中填写设备令牌"
+                null -> if (configured) "正在检查连接…" else "请在服务器设置中填写中继地址和设备令牌"
             }
         }
         connectionText.setTextColor(when (linkResult) {
@@ -214,7 +214,7 @@ class MainActivity : Activity() {
         linkResult = null
         connection = null
         refreshStatus()
-        if (token.length < 32) return
+        if (url.isBlank() || token.length < 32) return
         statusIo.execute {
             val result = Uploader.connectionStatus(url, token)
             runOnUiThread {
@@ -303,7 +303,7 @@ class MainActivity : Activity() {
             form.append(input, 6)
             return input
         }
-        val url = field("上传地址", Prefs.uploadUrl(activity), Prefs.DEFAULT_UPLOAD_URL,
+        val url = field("上传地址", Prefs.uploadUrl(activity), "请输入中继的 HTTPS 上传地址",
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_URI)
         val token = field("设备令牌", Prefs.token(activity), "与 Windows 端的令牌相同",
             InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD)

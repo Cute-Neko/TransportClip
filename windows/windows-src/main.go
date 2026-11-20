@@ -99,9 +99,6 @@ func loadConfig() {
 	if b, err := os.ReadFile(cfgPath); err == nil {
 		json.Unmarshal(b, &cfg)
 	}
-	if cfg.ServerURL == "" {
-		cfg.ServerURL = "wss://relay.example.com/tr-relay/ws"
-	}
 	if cfg.Token != "" && cfg.TokenEnc == "" { // 明文 → DPAPI 加密
 		if enc, err := dpapiProtect([]byte(cfg.Token)); err == nil && enc != "" {
 			cfg.TokenEnc = enc
@@ -366,7 +363,7 @@ func setUI(s uiState) {
 		text = "连接中…"
 	case stateUnconfigured:
 		ico = icon("ico_gray.ico")
-		text = "未配置令牌"
+		text = "请配置中继地址和设备令牌"
 	default:
 		ico = icon("ico_red.ico")
 		text = "已断开,自动重连中"
@@ -384,7 +381,7 @@ func wsLoop() {
 	backoff := time.Second
 	for {
 		tk := token()
-		if tk == "" {
+		if tk == "" || strings.TrimSpace(cfg.ServerURL) == "" {
 			setUI(stateUnconfigured)
 			select {
 			case <-reconnectNow:
